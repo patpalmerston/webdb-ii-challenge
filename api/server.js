@@ -1,12 +1,12 @@
-const express = require('express');
-const helmet = require('helmet');
+const express = require(`express`);
+const configureMiddleware = require('../config/middleware');
 
 const zoosRouter = require('../routers/zoos-router.js');
 
 const server = express();
 
-server.use(helmet());
-server.use(express.json());
+configureMiddleware(server);
+
 
 server.use('/api/zoos', zoosRouter);
 

@@ -1,4 +1,5 @@
 const router = require('express').Router();
+// or const router = express.Router();
 const knex = require('knex');
 
 
@@ -10,11 +11,14 @@ const knexConfig = {
   }
 }
 
-
 const db =knex(knexConfig);
 
-// const router = require('express').Router();//Dont need router yet
-// endpoints here
+const UserError = (status, message, res) => {
+  res.status(status).json({ errorMessage: message });
+  return;
+}
+
+
 
 // get database
 router.get('/', (req, res) => {
@@ -22,9 +26,7 @@ router.get('/', (req, res) => {
     .then(zoos => {
       res.status(200).json(zoos)
     })
-    .catch(err => {
-      res.status(500).json(err)
-    })
+    .catch(err => {UserError(500, 'Zoo with that ID does not exist', err)}) //does it work?
 });
 
 // get by ID
@@ -38,9 +40,7 @@ router.get('/:id', (req, res) => {
       } else {
         res.status(404).json({ message: 'Zoo not found'})
       }
-    }).catch(err => {
-      res.status(500).json(err)
-    })
+    }).catch(err => {UserError(500, 'Zoo with that ID does not exist', err)}) // how to check this?
 });
 
 // Post new Zoos
