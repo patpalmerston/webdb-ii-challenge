@@ -90,6 +90,23 @@ server.put('/api/zoos/:id', (req, res) => {
     })
 })
 
+// Delete a zoo
+server.delete('/api/zoos/:id', (req, res) => {
+  db('zoos')
+    .where({ id: req.params.id })
+    .del()
+    .then(count => {
+      if (count > 0) {
+        res.status(204).end();
+      } else {
+        res.status(404).json({ message: 'Zoo Id not found' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+});
+
 
 
 // Port???
