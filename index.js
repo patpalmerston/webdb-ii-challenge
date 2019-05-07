@@ -22,6 +22,7 @@ const db =knex(knexConfig);
 // const router = require('express').Router();//Dont need router yet
 // endpoints here
 
+// get database
 server.get('/api/zoos', (req, res) => {
   db('zoos')
     .then(zoos => {
@@ -32,6 +33,7 @@ server.get('/api/zoos', (req, res) => {
     })
 });
 
+// get by ID
 server.get('/api/zoos/:id', (req, res) => {
   db('zoos')
     .where({ id: req.params.id })
@@ -47,6 +49,7 @@ server.get('/api/zoos/:id', (req, res) => {
     })
 });
 
+// Post new Zoos
 server.post('/api/zoos', (req, res) => {
   db('zoos')
     .insert(req.body)
@@ -62,8 +65,30 @@ server.post('/api/zoos', (req, res) => {
     }).catch(err => {
       res.status(500).json(err)
     })
-})
+});
 
+// update zoos
+server.put('/api/zoos/:id', (req, res) => {
+
+  db('zoos')
+    .where({id: req.params.id})
+    .update(req.body)
+    .then(count => {
+      if (count > 0) {
+        db('zoos')
+        .where({id: req.params.id})
+        .first()
+        .then(zoo => {
+          res.status(200).json(zoo)
+        })
+      } else {
+        res.status(404).json({message: 'zoo not found'})
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+})
 
 
 
