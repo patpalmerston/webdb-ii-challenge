@@ -4,13 +4,19 @@
 	"description": "RDBMS API Mini Sprint",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon index.js"
+		"start": "node index.js",
+		"server": "nodemon index.js"
 	},
 	"author": "Lambda School",
 	"license": "ISC",
 	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^8.0.0",
 		"express": "^4.16.4",
-		"helmet": "^3.15.0"
+		"helmet": "^3.18.0",
+		"knex": "^0.16.5",
+		"morgan": "^1.9.1",
+		"sqlite3": "^4.0.6"
 	},
 	"devDependencies": {
 		"nodemon": "^1.18.9"
